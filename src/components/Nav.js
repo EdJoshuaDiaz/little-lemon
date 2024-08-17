@@ -8,14 +8,14 @@ function Nav() {
                 <a href="/"><img src={Logo} alt="Little Lemon" width={300}/></a>
             </div>
             <div>
-                <ul>
+                <menu>
                     <li><a href="/" role="button">Home</a></li>
                     <li><a href="/" role="button">Home</a></li>
                     <li><a href="/" role="button">Home</a></li>
                     <li><a href="/" role="button">Home</a></li>
                     <li><a href="/" role="button">Home</a></li>
                     <li><a href="/" role="button">Home</a></li>
-                </ul>
+                </menu>
             </div>
         </nav>
     )
