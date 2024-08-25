@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../images/Logo.jpg";
+import Logo from "../images/Logo.png";
 import { Link, NavLink } from "react-router-dom";
 import "../App.css";
 import {useRef} from "react";
@@ -21,7 +21,7 @@ function Header() {
         <>
             <header className="container-row">
                 <div className="container-column">
-                    <nav id>
+                    <nav>
                         <Link to="/"><img src={Logo} alt="Little Lemon" width={300}/></Link>
                         <menu ref={navRef}>
                             <button className="nav-btn nav-close-btn" onClick={showNavBar}>
