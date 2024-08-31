@@ -137,7 +137,8 @@ nav img, footer img {
 nav menu {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 nav menu li {
@@ -170,6 +171,13 @@ nav menu li a:not(.active):hover {
   outline: none;
   color: var(--primary);
   display: none;
+}
+
+
+.nav-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 /* Nav component design END */
 
@@ -357,6 +365,79 @@ footer .btn {
 }
 /*Home section END*/
 
+
+/*Reserve section START*/
+#reservation h3 {
+  
+  margin-bottom:20px;
+}
+
+form input, form textarea {
+  width: 100%;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid var(--primary);
+  padding: 0 8px;
+}
+form div {
+  margin-bottom: 15px;
+}
+
+#radio-cont {
+  display: inline-flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+#message-cont {
+  margin: 30px 0px;
+  display: grid;
+}
+
+.form-col-2, .form-col-3 {
+  display: grid;
+  gap: 20px;
+}
+.form-col-2 {
+  grid-template-columns: auto auto;
+}
+.form-col-3 {
+  grid-template-columns: auto auto auto;
+}
+
+#reservation .nav-close-btn {
+  display: block;
+}
+
+.modal {
+  position: fixed;
+  background-color: var(--lightColor);
+  padding: 30px 20px;
+  animation: dropTop 0.5s linear;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;  
+  z-index:1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#reservation .overlay {
+  background-color: rgba(0, 0, 0, .5);
+}
+/*Reserve section START*/
+
+/*mobile -------------------------------------------*/
+
 @media only screen and (max-width: 768px) {
 
   /*Global Design*/
@@ -421,12 +502,6 @@ footer .btn {
     transform:none;
     background-color: var(--lightBG);
   }
-
-  .nav-close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-  }
   /*Nav Design*/
 
   /*Footer design*/
@@ -483,4 +558,22 @@ footer .btn {
 }
 /*About Us section START*/
 
+/*Reservation START*/
+.form-col-2, .form-col-3 {
+  display: block;
+}
+
+.modal {
+  height: 90%;
+  width: 90%;
+  overflow-y: scroll;
+}
+
+/*Reservation END*/
+
+}
+
+@keyframes dropTop {
+  0% {opacity: 0;}
+  100% {opacity: 100%;}
 }

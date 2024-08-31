@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import stark from "../../images/stark.jpg";
 import thor from "../../images/thor.jpg";
 import steve from "../../images/steve.jpg";
@@ -8,15 +8,20 @@ import dessert from "../../images/dessert.jpg";
 import chefs from "../../images/chefs.jpg"
 import "../../App.css";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import {useFormik} from "formik";
+import Reservation from "./Reservation";
 
 function Home() {
+
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
         <>
             <main className="container-row hero">
                 <div className="container-column">
                     <h1>Litle Lemon</h1>
                     <p>We are family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</p>
-                    <a className="btn btn-secondary" href="/reservation">Reserve A Table</a>
+                    <a className="btn btn-secondary" onClick={() => setIsOpen(true)}>Reserve A Table</a>
                 </div>
             </main>
             <section id="cr1" className="container-row">
@@ -120,6 +125,62 @@ function Home() {
                     </figure>
                 </div>
             </section>
+
+
+
+            <Reservation open={isOpen} onClose={() => setIsOpen (false)}>
+                        <h3>Reserve a Table Now!</h3>
+                        <form>
+                            <div className="form-col-2">
+                                <div id="fname-cont">
+                                    <label htmlFor="fname">First Name</label>
+                                    <input type="text" id="fname" name="fname" />
+                                </div>
+                                <div id="lname-cont">
+                                    <label htmlFor="lname">Last Name</label>
+                                    <input type="text" id="lname" name="lname" />
+                                </div>
+                            </div>
+
+                            <div className="form-col-2">
+                                <div id="email-cont">
+                                    <label htmlFor="email">Email</label>
+                                    <input type="email" id="email" name="email" />
+                                </div>
+                                <div id="phone-cont-2">
+                                    <label htmlFor="phone">Phone</label>
+                                    <input type="phone" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
+                                </div>
+                            </div>
+                            
+                            <div id="radio-cont">
+                                <label htmlFor="radio">Table</label>
+                                <input type="radio" id="indoor" name="indoor" value="indoor"/><label htmlFor="indoor">Indoor</label>
+                                <input type="radio" id="outdoor" name="outdoor" value="outdoor"/><label htmlFor="indoor">Outdoor</label>
+                            </div>
+
+                            <div className="form-col-3">
+                                <div id="date-cont">
+                                    <label htmlFor="date">Date</label>
+                                    <input type="date" id="date" name="date" />
+                                </div>
+                                <div id="time-cont">
+                                    <label htmlFor="time">Time</label>
+                                    <input type="time" id="time" name="time"/>
+                                </div>
+                                <div id="guests-cont">
+                                    <label htmlFor="guests">Number of Guests</label>
+                                    <input type="number" id="number" name="number"/>
+                                </div>
+                            </div>
+                            
+                            <div id="message-cont">
+                                <label htmlFor="message">Any Additional Instructions</label>
+                                <textarea id="message" name="message"/>
+                            </div>
+                            <button type="submit" className="btn btn-primary">Reserve A Table</button>
+                        </form>
+            </Reservation>
         </>
     )
 }

@@ -30,7 +30,6 @@ function Header() {
                             <li onClick={hideNavbar}><NavLink to="/">Home</NavLink></li>
                             <li onClick={hideNavbar}><NavLink to="about">About Us</NavLink></li>
                             <li onClick={hideNavbar}><NavLink to="menu">Menu</NavLink></li>
-                            <li onClick={hideNavbar}><NavLink to="reservation">Reservation</NavLink></li>
                             <li onClick={hideNavbar}><NavLink to="order">Order Online</NavLink></li>
                             <li onClick={hideNavbar}><NavLink to="login">Log In</NavLink></li>
                         </menu>

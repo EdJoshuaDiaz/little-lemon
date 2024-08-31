@@ -1,4 +1,3 @@
-import Logo from "../images/Logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram, faYoutube, faYelp } from "@fortawesome/free-brands-svg-icons";
 import { NavLink } from "react-router-dom";
@@ -13,7 +12,6 @@ function Footer() {
                             <li><NavLink to="/">Home</NavLink></li>
                             <li><NavLink to="about">About Us</NavLink></li>
                             <li><NavLink to="menu">Menu</NavLink></li>
-                            <li><NavLink to="reservation">Reservation</NavLink></li>
                             <li><NavLink to="order">Order Online</NavLink></li>
                             <li><NavLink to="login">Log In</NavLink></li>
                         </menu>
