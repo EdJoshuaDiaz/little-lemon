@@ -8,7 +8,6 @@ import About from "./components/Pages/About";
 import Home from "./components/Pages/Home";
 import Login from "./components/Pages/Login";
 import Menu from "./components/Pages/Menu";
-import Reservation from "./components/Pages/Reservation";
 import Order from "./components/Pages/Order";
 
 

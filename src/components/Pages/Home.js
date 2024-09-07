@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import stark from "../../images/stark.jpg";
 import thor from "../../images/thor.jpg";
 import steve from "../../images/steve.jpg";
@@ -8,12 +8,76 @@ import dessert from "../../images/dessert.jpg";
 import chefs from "../../images/chefs.jpg"
 import "../../App.css";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import {useFormik} from "formik";
+import validator from "validator";
 import Reservation from "./Reservation";
+import Swal from "sweetalert2";
 
 function Home() {
 
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var minDate= year + '-' + month + '-' + day;
+
     const [isOpen, setIsOpen] = useState(false);
+
+    const tableOption = [
+        {value: "indoor", label: "Indoor"},
+        {value: "outdoor", label: "Outdoor"},
+    ]
+
+    const [fname, setFname] = useState({value:"", isTouched: false});
+    const [lname, setLname] = useState({value:"", isTouched: false});
+    const [email, setEmail] = useState({value:"", isTouched: false});
+    const [phone, setPhone] = useState({value:"", isTouched: false});
+    const [table, setTable] = useState({value:"", isTouched: false});
+    const [date, setDate] = useState({value:"", isTouched: false});
+    const [time, setTime] = useState({value:"", isTouched: false});
+    const [guests, setGuests] = useState({value:"", isTouched: false});
+    const [message, setMessage] = useState({value:"", isTouched: false});
+    const [value, setValue] = useState("");
+
+    function ClearForm () {
+        setFname({value:"", isTouched: false});
+        setLname({value:"", isTouched: false});
+        setEmail({value:"", isTouched: false});
+        setPhone({value:"", isTouched: false});
+        setTable({value:"", isTouched: false});
+        setDate({value:"", isTouched: false});
+        setTime({value:"", isTouched: false});
+        setGuests({value:"", isTouched: false});
+        setMessage({value:"", isTouched: false});
+    }
+
+    function SubmitHandler(e) {
+        Swal.fire({
+            title: "RESERVED!",
+            text: "Your reservation has been successful!",
+            icon: "success"
+          });
+        e.preventDefault();
+        ClearForm();
+    }
+
+    function FormChecker() {
+        if (fname.value && lname.value && validator.isEmail(email.value) && phone.value.length === 11 && date.value && time.value && guests.value) {
+            return true;
+        }
+    }
+
+    function orderNow () {
+        Swal.fire({
+            title: "ORDER PLACED!",
+            icon: "success"
+          });
+    }
 
     return (
         <>
@@ -27,7 +91,7 @@ function Home() {
             <section id="cr1" className="container-row">
                 <div className="container-column">
                     <h2>Specials</h2>
-                    <a className="btn btn-primary" href="">Online Order</a>
+                    <a className="btn btn-primary" href="/order">Online Order</a>
                 </div>
             </section>
             <section id="cr2" className="container-row">
@@ -41,7 +105,7 @@ function Home() {
                             </div>
                             <div className="menu-details">
                                 <p>Food as beautiful as the view from Santorini. Today’s good mood is brought to you by Greek food.</p>
-                                <a href=""><FaLongArrowAltRight /> Order Now</a>
+                                <p className="order-now" onClick={orderNow}><FaLongArrowAltRight /> Order Now</p>
                             </div>
                         </figcaption>
                     </figure>
@@ -54,7 +118,7 @@ function Home() {
                             </div>
                             <div className="menu-details">
                                 <p>Food as beautiful as the view from Santorini. Today’s good mood is brought to you by Greek food.</p>
-                                <a href=""><FaLongArrowAltRight /> Order Now</a>
+                                <p className="order-now" onClick={orderNow}><FaLongArrowAltRight /> Order Now</p>
                             </div>
                         </figcaption>
                     </figure>
@@ -67,7 +131,7 @@ function Home() {
                             </div>
                             <div className="menu-details">
                                 <p>Food as beautiful as the view from Santorini. Today’s good mood is brought to you by Greek food.</p>
-                                <a href=""><FaLongArrowAltRight /> Order Now</a>
+                                <p className="order-now" onClick={orderNow}><FaLongArrowAltRight /> Order Now</p>
                             </div>
                         </figcaption>
                     </figure>
@@ -126,60 +190,165 @@ function Home() {
                 </div>
             </section>
 
-
-
+            
             <Reservation open={isOpen} onClose={() => setIsOpen (false)}>
-                        <h3>Reserve a Table Now!</h3>
-                        <form>
-                            <div className="form-col-2">
-                                <div id="fname-cont">
-                                    <label htmlFor="fname">First Name</label>
-                                    <input type="text" id="fname" name="fname" />
-                                </div>
-                                <div id="lname-cont">
-                                    <label htmlFor="lname">Last Name</label>
-                                    <input type="text" id="lname" name="lname" />
-                                </div>
-                            </div>
+                <form onSubmit={SubmitHandler}>
+                    <h3>Reserve a Table Now!</h3>
+                    <p className="form-desc">Answer the form to submit a reservation</p>
 
-                            <div className="form-col-2">
-                                <div id="email-cont">
-                                    <label htmlFor="email">Email</label>
-                                    <input type="email" id="email" name="email" />
-                                </div>
-                                <div id="phone-cont-2">
-                                    <label htmlFor="phone">Phone</label>
-                                    <input type="phone" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
-                                </div>
-                            </div>
-                            
-                            <div id="radio-cont">
-                                <label htmlFor="radio">Table</label>
-                                <input type="radio" id="indoor" name="indoor" value="indoor"/><label htmlFor="indoor">Indoor</label>
-                                <input type="radio" id="outdoor" name="outdoor" value="outdoor"/><label htmlFor="indoor">Outdoor</label>
-                            </div>
+                    <div className="form-col-2">
+                        <div id="fname-cont">
+                            <label htmlFor="fname">First Name</label>
+                            <input 
+                                type="text"
+                                id="fname"
+                                name="fname"
+                                placeholder="Juan"
+                                value={fname.value}
+                                onChange={e => {setFname({...fname, value: e.target.value})}}
+                                onFocus={() => {setFname({...fname, isTouched: true})}}
+                            />
+                            {fname.isTouched && fname.value === "" ? (
+                                <p className="error-msg">Required</p>
+                            ): null}
+                        </div>
 
-                            <div className="form-col-3">
-                                <div id="date-cont">
-                                    <label htmlFor="date">Date</label>
-                                    <input type="date" id="date" name="date" />
-                                </div>
-                                <div id="time-cont">
-                                    <label htmlFor="time">Time</label>
-                                    <input type="time" id="time" name="time"/>
-                                </div>
-                                <div id="guests-cont">
-                                    <label htmlFor="guests">Number of Guests</label>
-                                    <input type="number" id="number" name="number"/>
-                                </div>
-                            </div>
+                        <div id="lname-cont">
+                            <label htmlFor="lname">Last Name</label>
+                            <input
+                                type="text"
+                                id="lname"
+                                name="lname"
+                                placeholder="Dela Cruz"
+                                value={lname.value}
+                                onChange={e => {setLname({...lname, value: e.target.value})}}
+                                onFocus={() => {setLname({...lname, isTouched: true})}}
+                            />
+                            {lname.isTouched && lname.value === "" ? (
+                                <p className="error-msg">Required</p>
+                            ): null}
+                        </div>
+                    </div>
+
+                     <div className="form-col-2">
+                        <div id="email-cont">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="email@email.com"
+                                value={email.value}
+                                onChange={e => {setEmail({...email, value: e.target.value})}}
+                                onFocus={() => {setEmail({...email, isTouched: true})}}
+                            />
+                            {email.isTouched && email.value === "" ? (
+                                <p className="error-msg">Required</p>
+                            ): email.isTouched && !validator.isEmail(email.value) ? (
+                                <p className="error-msg">Invalid email format</p>
+                            ): null}
                             
-                            <div id="message-cont">
-                                <label htmlFor="message">Any Additional Instructions</label>
-                                <textarea id="message" name="message"/>
-                            </div>
-                            <button type="submit" className="btn btn-primary">Reserve A Table</button>
-                        </form>
+                        </div>
+
+                        <div id="phone-cont-2">
+                            <label htmlFor="phone">Phone</label>
+                            <input
+                                type="phone"
+                                id="phone"
+                                name="phone"
+                                placeholder="09123456789"
+                                value={phone.value}
+                                onChange={e => {setPhone({...phone, value: e.target.value})}}
+                                onFocus={() => {setPhone({...phone, isTouched: true})}}
+                            />
+                            {phone.isTouched && phone.value === "" ? (
+                                <p className="error-msg">Required</p>
+                            ): phone.isTouched && !validator.isMobilePhone(phone.value, "en-PH") ? (
+                                <p className="error-msg">Invalid phone format</p>
+                            ): null}
+                        </div>
+                    </div>
+                                    
+                    <div id="radio-cont">
+                        <label htmlFor="radio">Table</label>
+                            {tableOption.map(list => (
+                                <div key={list.value} className="radio">
+                                    <input 
+                                    name = "table" 
+                                    type = "radio" 
+                                    value = {list.value} 
+                                    id = {list.value}
+                                    checked = {value === list.value}
+                                    onChange =  {e => setValue(e.target.value)}
+                                    /> <label htmlFor={list.value}>{list.label}</label>
+                                </div>
+                            ))}
+                    </div>
+
+                    <div className="form-col-3">
+                        <div id="date-cont">
+                            <label htmlFor="date">Date</label>
+                            <input
+                            type="date"
+                            id="date"
+                            name="date"
+                            data-provider="datepicker"
+                            min={minDate}
+                            value={date.value}
+                                onChange={e => {setDate({...date, value: e.target.value})}}
+                                onFocus={() => {setDate({...date, isTouched: true})}}
+                            />
+                            {date.isTouched && date.value === "" ? (
+                                <p className="error-msg">Required</p>
+                            ): null}
+                        </div>
+                                        
+                        <div id="time-cont">
+                            <label htmlFor="time">Time</label>
+                            <input
+                                type="time"
+                                id="time"
+                                name="time"
+                                value={time.value}
+                                onChange={e => {setTime({...time, value: e.target.value})}}
+                                onFocus={() => {setTime({...time, isTouched: true})}}
+                            />
+                            {time.isTouched && time.value === "" ? (
+                                <p className="error-msg">Required</p>
+                            ): null}
+                        </div>
+
+                        <div id="guests-cont">
+                            <label htmlFor="guests">Number of Guests</label>
+                            <input
+                                type="number"
+                                id="guests"
+                                name="guests"
+                                pattern="[0-9]"
+                                min="0"
+                                value={guests.value}
+                                onChange={e => {setGuests({...guests, value: e.target.value})}}
+                                onFocus={() => {setGuests({...guests, isTouched: true})}}
+                            />
+                            {guests.isTouched && guests.value === "" ? (
+                                <p className="error-msg">Required</p>
+                            ): guests.isTouched && guests.value < 3 ? (
+                                <p className="error-msg">Must be atleast 3 pax to reserve.</p>
+                            ): null}
+                        </div>
+                    </div>
+                                    
+                    <div id="message-cont">
+                        <label htmlFor="message">Any Additional Instructions</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            value={message.value}
+                            onChange={e => {setMessage({...message, value: e.target.value})}}
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary" disabled={!FormChecker()}>Reserve A Table</button>
+                    </form>
             </Reservation>
         </>
     )
